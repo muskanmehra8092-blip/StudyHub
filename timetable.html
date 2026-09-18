@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Weekly Timetable</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #17366d;
+            padding: 30px;
+        }
+
+        /* ================= HEADER ================= */
+
+        .top-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 35px;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .calendar-icon {
+            width: 65px;
+            height: 65px;
+            border: 5px solid #1683ed;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            color: #1683ed;
+        }
+
+        .title-section h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .title-section p {
+            font-size: 18px;
+            color: #83a4d8;
+        }
+
+        /* ================= CONTROLS ================= */
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .date-box {
+            border: 2px solid #e2ebf8;
+            border-radius: 15px;
+            padding: 15px 25px;
+            width: 365px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #5574a8;
+        }
+
+        .arrow {
+            font-size: 30px;
+            color: #4778b9;
+        }
+
+        .view-buttons {
+            display: flex;
+            background: #eef5ff;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .view-buttons button {
+            border: none;
+            padding: 18px 30px;
+            font-size: 17px;
+            background: transparent;
+            color: #91a9cf;
+        }
+
+        .view-buttons .active {
+            background: #1683ed;
+            color: white;
+            border-radius: 13px;
+        }
+
+        /* ================= TIMETABLE ================= */
+
+        .timetable {
+            display: grid;
+
+            /* Time + 7 Days */
+            grid-template-columns: 105px repeat(7, 1fr);
+
+            border: 2px solid #e5eef9;
+            border-radius: 18px;
+            overflow: hidden;
+            min-width: 1100px;
+        }
+
+        .day-header {
+            height: 95px;
+            border-right: 2px solid #e5eef9;
+            border-bottom: 2px solid #e5eef9;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .day-header span {
+            margin-top: 8px;
+            color: #8aa5ce;
+            font-size: 15px;
+        }
+
+        .time-column {
+            position: relative;
+            height: 680px;
+            border-right: 2px solid #e5eef9;
+        }
+
+        .time {
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7794c1;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .day-column {
+            position: relative;
+            height: 680px;
+            border-right: 2px solid #e5eef9;
+
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0px,
+                    transparent 83px,
+                    #e5eef9 84px,
+                    #e5eef9 85px
+                );
+        }
+
+        .day-column:last-child {
+            border-right: none;
+        }
+
+        /* ================= SUBJECT CARDS ================= */
+
+        .class {
+            position: absolute;
+            left: 8px;
+            right: 8px;
+
+            padding: 16px;
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .class h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .class p {
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        /* Colors */
+
+        .blue {
+            background: #e3f2ff;
+            color: #2878c8;
+        }
+
+        .green {
+            background: #e4f9e9;
+            color: #36a565;
+        }
+
+        .purple {
+            background: #f0e4ff;
+            color: #8050bd;
+        }
+
+        .orange {
+            background: #fff0df;
+            color: #d27b25;
+        }
+
+        .pink {
+            background: #ffe4f0;
+            color: #dc5688;
+        }
+
+        .gray {
+            background: #eef1f6;
+            color: #66748a;
+        }
+
+        /* ================= POSITION ================= */
+
+        /* 8 AM - 10 AM */
+        .t1 {
+            top: 10px;
+            height: 70px;
+        }
+
+        /* 9 AM - 11:30 AM */
+        .t2 {
+            top: 95px;
+            height: 125px;
+        }
+
+        /* 10 AM - 12 PM */
+        .t3 {
+            top: 95px;
+            height: 125px;
+        }
+
+        /* 2 PM - 4 PM */
+        .t4 {
+            top: 265px;
+            height: 115px;
+        }
+
+        /* 3 PM - 5 PM */
+        .t5 {
+            top: 350px;
+            height: 115px;
+        }
+
+        /* 4 PM - 5:30 PM */
+        .t6 {
+            top: 350px;
+            height: 100px;
+        }
+
+        /* 5 PM - 7 PM */
+        .t7 {
+            top: 435px;
+            height: 115px;
+        }
+
+        /* 6 PM - 7 PM */
+        .t8 {
+            top: 435px;
+            height: 90px;
+        }
+
+        /* 6 PM - 7:30 PM */
+        .t9 {
+            top: 435px;
+            height: 105px;
+        }
+
+        /* 7 PM - 8 PM */
+        .t10 {
+            top: 520px;
+            height: 90px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            body {
+                padding: 15px;
+                overflow-x: auto;
+            }
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 25px;
+            }
+
+            .controls {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .date-box {
+                width: 100%;
+            }
+
+            .timetable {
+                min-width: 1100px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="top-section">
+
+        <div class="title-section">
+
+            <div class="calendar-icon">
+                ▦
+            </div>
+
+            <div>
+                <h1>Weekly Timetable</h1>
+                <p>Plan your study schedule and stay on track!</p>
+            </div>
+
+        </div>
+
+        <div class="controls">
+
+            <div class="date-box">
+                <span class="arrow">‹</span>
+                <span>8 Sep - 14 Sep 2025</span>
+                <span class="arrow">›</span>
+            </div>
+
+            <div class="view-buttons">
+                <button class="active">Week</button>
+                <button>Day</button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TIMETABLE ================= -->
+
+    <div class="timetable">
+
+        <!-- Header -->
+
+        <div class="day-header"></div>
+
+        <div class="day-header">
+            Mon
+            <span>8 Sep</span>
+        </div>
+
+        <div class="day-header">
+            Tue
+            <span>9 Sep</span>
+        </div>
+
+        <div class="day-header">
+            Wed
+            <span>10 Sep</span>
+        </div>
+
+        <div class="day-header">
+            Thu
+            <span>11 Sep</span>
+        </div>
+
+        <div class="day-header">
+            Fri
+            <span>12 Sep</span>
+        </div>
+
+        <div class="day-header">
+            Sat
+            <span>13 Sep</span>
+        </div>
+
+        <div class="day-header">
+            Sun
+            <span>14 Sep</span>
+        </div>
+
+
+        <!-- Time Column -->
+
+        <div class="time-column">
+
+            <div class="time">8:00 AM</div>
+            <div class="time">10:00 AM</div>
+            <div class="time">12:00 PM</div>
+            <div class="time">2:00 PM</div>
+            <div class="time">4:00 PM</div>
+            <div class="time">6:00 PM</div>
+            <div class="time">8:00 PM</div>
+            <div class="time">10:00 PM</div>
+
+        </div>
+
+
+        <!-- ================= MONDAY ================= -->
+
+        <div class="day-column">
+
+            <div class="class blue t1">
+                <h3>Mathematics</h3>
+                <p>8:00 - 9:30 AM</p>
+            </div>
+
+            <div class="class purple t4">
+                <h3>Computer Science</h3>
+                <p>2:00 - 4:00 PM</p>
+            </div>
+
+            <div class="class pink t7">
+                <h3>English</h3>
+                <p>6:00 - 7:00 PM</p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= TUESDAY ================= -->
+
+        <div class="day-column">
+
+            <div class="class green t2">
+                <h3>Physics</h3>
+                <p>10:00 - 11:30 AM</p>
+            </div>
+
+            <div class="class orange t6">
+                <h3>Chemistry</h3>
+                <p>4:00 - 5:30 PM</p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= WEDNESDAY ================= -->
+
+        <div class="day-column">
+
+            <div class="class purple t1">
+                <h3>Computer Science</h3>
+                <p>8:00 - 10:00 AM</p>
+            </div>
+
+            <div class="class blue t4">
+                <h3>Mathematics</h3>
+                <p>2:00 - 4:00 PM</p>
+            </div>
+
+            <div class="class green t9">
+                <h3>Physics</h3>
+                <p>6:00 - 7:30 PM</p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= THURSDAY ================= -->
+
+        <div class="day-column">
+
+            <div class="class orange t3">
+                <h3>Chemistry</h3>
+                <p>10:00 - 12:00 PM</p>
+            </div>
+
+            <div class="class pink t8">
+                <h3>English</h3>
+                <p>4:00 - 5:00 PM</p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= FRIDAY ================= -->
+
+        <div class="day-column">
+
+            <div class="class blue t1">
+                <h3>Mathematics</h3>
+                <p>8:00 - 10:00 AM</p>
+            </div>
+
+            <div class="class purple t4">
+                <h3>Computer Science</h3>
+                <p>2:00 - 4:00 PM</p>
+            </div>
+
+            <div class="class green t9">
+                <h3>Physics</h3>
+                <p>6:00 - 7:30 PM</p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= SATURDAY ================= -->
+
+        <div class="day-column">
+
+            <div class="class green t2">
+                <h3>Revision</h3>
+                <p>9:00 - 11:00 AM</p>
+            </div>
+
+            <div class="class purple t5">
+                <h3>Web Dev</h3>
+                <p>3:00 - 5:00 PM</p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= SUNDAY ================= -->
+
+        <div class="day-column">
+
+            <div class="class gray t2">
+                <h3>Rest / Personal</h3>
+                <p>9:00 - 11:00 AM</p>
+            </div>
+
+            <div class="class pink t10">
+                <h3>Study</h3>
+                <p>5:00 - 7:00 PM</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

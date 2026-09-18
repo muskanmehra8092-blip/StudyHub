@@ -1,0 +1,735 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyHub - Notes</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* ================= BASIC RESET ================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #172554;
+        }
+
+        /* ================= TOP BORDER ================= */
+
+        .top-border {
+            height: 10px;
+            background-color: #071a3d;
+        }
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+        }
+
+        .title-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #1685e5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+        }
+
+        .title-section h1 {
+            font-size: 42px;
+            margin-bottom: 8px;
+            color: #10275b;
+        }
+
+        .title-section p {
+            font-size: 17px;
+            color: #7182a5;
+        }
+
+        /* ================= SEARCH AREA ================= */
+
+        .search-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 350px;
+        }
+
+        .search-box {
+            height: 55px;
+            border: 2px solid #e1e9f5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            background-color: white;
+        }
+
+        .search-box i {
+            color: #7890b5;
+            font-size: 19px;
+            margin-right: 12px;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #172554;
+        }
+
+        .search-box input::placeholder {
+            color: #8da0bf;
+        }
+
+        .subject-select {
+            height: 55px;
+            border: 2px solid #e1e9f5;
+            border-radius: 12px;
+            padding: 0 18px;
+            font-size: 16px;
+            color: #263b68;
+            background-color: white;
+            outline: none;
+        }
+
+        /* ================= TABS ================= */
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0 30px;
+        }
+
+        .tab {
+            padding: 18px 38px;
+            border-radius: 13px;
+            background-color: #f0f7ff;
+            color: #172d60;
+            font-size: 17px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background-color: #1685e5;
+            color: white;
+        }
+
+        /* ================= NOTES LIST ================= */
+
+        .notes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* ================= NOTE CARD ================= */
+
+        .note-card {
+            min-height: 145px;
+            border: 2px solid #e4edf7;
+            border-radius: 17px;
+            padding: 25px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+        }
+
+        .note-left {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        /* ================= NOTE ICON ================= */
+
+        .note-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .pdf {
+            background-color: #ef233c;
+        }
+
+        .math {
+            background-color: #6938ef;
+        }
+
+        .physics {
+            background-color: #12ad70;
+        }
+
+        .chemistry {
+            background-color: #f5a623;
+        }
+
+        .english {
+            background-color: #e83e8c;
+        }
+
+        .dsa {
+            background-color: #1685e5;
+        }
+
+        /* ================= NOTE DETAILS ================= */
+
+        .note-details h2 {
+            font-size: 21px;
+            color: #263d70;
+            margin-bottom: 12px;
+        }
+
+        .note-info {
+            color: #8a9bb9;
+            font-size: 16px;
+        }
+
+        .note-info span {
+            margin-right: 12px;
+        }
+
+        /* ================= SUBJECT BADGE ================= */
+
+        .badge {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 20px;
+            margin-left: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .badge-blue {
+            background-color: #e0f0ff;
+            color: #2479c9;
+        }
+
+        .badge-purple {
+            background-color: #eee8ff;
+            color: #7544d8;
+        }
+
+        .badge-green {
+            background-color: #e1f8ee;
+            color: #159460;
+        }
+
+        .badge-orange {
+            background-color: #fff0dc;
+            color: #e68b17;
+        }
+
+        .badge-pink {
+            background-color: #ffe4f1;
+            color: #dc5795;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .note-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .view-btn {
+            padding: 14px 28px;
+            border: 2px solid #dce9f7;
+            background-color: white;
+            border-radius: 12px;
+            color: #1475d1;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .download-btn {
+            width: 52px;
+            height: 52px;
+            border: 2px solid #e2edf8;
+            background-color: white;
+            border-radius: 12px;
+            color: #397fc5;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* ================= HOVER ================= */
+
+        .view-btn:hover,
+        .download-btn:hover {
+            background-color: #f1f8ff;
+        }
+
+        .tab:hover {
+            transform: translateY(-1px);
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            .page-header {
+                flex-direction: column;
+            }
+
+            .search-area {
+                width: 100%;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .note-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .note-actions {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .title-section h1 {
+                font-size: 32px;
+            }
+
+            .title-section p {
+                font-size: 14px;
+            }
+
+            .title-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+            }
+
+            .note-left {
+                gap: 15px;
+            }
+
+            .note-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 25px;
+            }
+
+            .note-details h2 {
+                font-size: 17px;
+            }
+
+            .badge {
+                margin-left: 5px;
+                padding: 6px 10px;
+            }
+
+            .tabs {
+                gap: 8px;
+            }
+
+            .tab {
+                padding: 13px 18px;
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="top-border"></div>
+
+    <main class="container">
+
+        <!-- ================= HEADER ================= -->
+
+        <section class="page-header">
+
+            <div class="title-section">
+
+                <div class="title-icon">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <div>
+                    <h1>Notes</h1>
+                    <p>Access subject-wise notes, download or view online.</p>
+                </div>
+
+            </div>
+
+            <!-- Search & Subject -->
+
+            <div class="search-area">
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="text"
+                           placeholder="Search notes...">
+                </div>
+
+                <select class="subject-select">
+                    <option>All Subjects</option>
+                    <option>Computer Science</option>
+                    <option>Mathematics</option>
+                    <option>Physics</option>
+                    <option>Chemistry</option>
+                    <option>English</option>
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TABS ================= -->
+
+        <section class="tabs">
+
+            <button class="tab active">All Notes</button>
+
+            <button class="tab">PDF Notes</button>
+
+            <button class="tab">Handwritten</button>
+
+            <button class="tab">Important</button>
+
+        </section>
+
+
+        <!-- ================= NOTES ================= -->
+
+        <section class="notes-list">
+
+
+            <!-- NOTE 1 -->
+
+            <div class="note-card">
+
+                <div class="note-left">
+
+                    <div class="note-icon pdf">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+
+                    <div class="note-details">
+
+                        <h2>
+                            C Programming - Basics
+
+                            <span class="badge badge-blue">
+                                Computer Science
+                            </span>
+                        </h2>
+
+                        <div class="note-info">
+                            <span>PDF</span>
+                            •
+                            <span>1.2 MB</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="note-actions">
+
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="download-btn">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE 2 -->
+
+            <div class="note-card">
+
+                <div class="note-left">
+
+                    <div class="note-icon math">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+
+                    <div class="note-details">
+
+                        <h2>
+                            Calculus - Derivatives
+
+                            <span class="badge badge-purple">
+                                Mathematics
+                            </span>
+                        </h2>
+
+                        <div class="note-info">
+                            <span>PDF</span>
+                            •
+                            <span>850 KB</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="note-actions">
+
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="download-btn">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE 3 -->
+
+            <div class="note-card">
+
+                <div class="note-left">
+
+                    <div class="note-icon physics">
+                        <i class="fa-solid fa-atom"></i>
+                    </div>
+
+                    <div class="note-details">
+
+                        <h2>
+                            Electricity and Magnetism
+
+                            <span class="badge badge-green">
+                                Physics
+                            </span>
+                        </h2>
+
+                        <div class="note-info">
+                            <span>PDF</span>
+                            •
+                            <span>1.4 MB</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="note-actions">
+
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="download-btn">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE 4 -->
+
+            <div class="note-card">
+
+                <div class="note-left">
+
+                    <div class="note-icon chemistry">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+
+                    <div class="note-details">
+
+                        <h2>
+                            Organic Chemistry - GOC
+
+                            <span class="badge badge-orange">
+                                Chemistry
+                            </span>
+                        </h2>
+
+                        <div class="note-info">
+                            <span>PDF</span>
+                            •
+                            <span>1.1 MB</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="note-actions">
+
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="download-btn">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE 5 -->
+
+            <div class="note-card">
+
+                <div class="note-left">
+
+                    <div class="note-icon english">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+
+                    <div class="note-details">
+
+                        <h2>
+                            English Grammar - Tenses
+
+                            <span class="badge badge-pink">
+                                English
+                            </span>
+                        </h2>
+
+                        <div class="note-info">
+                            <span>PDF</span>
+                            •
+                            <span>620 KB</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="note-actions">
+
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="download-btn">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE 6 -->
+
+            <div class="note-card">
+
+                <div class="note-left">
+
+                    <div class="note-icon dsa">
+                        <i class="fa-solid fa-laptop"></i>
+                    </div>
+
+                    <div class="note-details">
+
+                        <h2>
+                            DSA - Arrays
+
+                            <span class="badge badge-blue">
+                                Computer Science
+                            </span>
+                        </h2>
+
+                        <div class="note-info">
+                            <span>PDF</span>
+                            •
+                            <span>980 KB</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="note-actions">
+
+                    <button class="view-btn">
+                        View
+                    </button>
+
+                    <button class="download-btn">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

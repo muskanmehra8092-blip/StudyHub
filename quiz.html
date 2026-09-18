@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyHub - Quiz</title>
+
+    <style>
+
+        /* ================= BASIC RESET ================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #172554;
+        }
+
+        .quiz-container {
+            width: 92%;
+            max-width: 1150px;
+            margin: 35px auto;
+        }
+
+
+        /* ================= TOP SECTION ================= */
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 45px;
+        }
+
+        .title-area {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .quiz-icon {
+            width: 75px;
+            height: 60px;
+            background: #1683e8;
+            border-radius: 15px 15px 25px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+        }
+
+        .title-area h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .title-area p {
+            color: #6b82a8;
+            font-size: 18px;
+        }
+
+
+        /* ================= SEARCH & FILTER ================= */
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-box,
+        .filter-box {
+            height: 55px;
+            border: 2px solid #e4edf7;
+            border-radius: 12px;
+            padding: 0 18px;
+            font-size: 16px;
+            color: #52698c;
+            outline: none;
+            background: white;
+        }
+
+        .search-box {
+            width: 260px;
+        }
+
+        .filter-box {
+            width: 210px;
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+            margin-bottom: 55px;
+        }
+
+        .stat-card {
+            height: 180px;
+            border-radius: 15px;
+            padding: 28px;
+            border: 1px solid #e1eaf5;
+        }
+
+        .stat-card:nth-child(1) {
+            background: #faf8ff;
+        }
+
+        .stat-card:nth-child(2) {
+            background: #effbf7;
+        }
+
+        .stat-card:nth-child(3) {
+            background: #fff8ed;
+        }
+
+        .stat-card:nth-child(4) {
+            background: #eff8ff;
+        }
+
+        .stat-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .purple {
+            background: #7447e8;
+        }
+
+        .green {
+            background: #16b879;
+        }
+
+        .orange {
+            background: #f59b0b;
+        }
+
+        .blue {
+            background: #1683e8;
+        }
+
+        .stat-number {
+            margin-top: 18px;
+            margin-left: 55px;
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        .purple-text {
+            color: #6338d9;
+        }
+
+        .green-text {
+            color: #159b6b;
+        }
+
+        .orange-text {
+            color: #d87908;
+        }
+
+        .blue-text {
+            color: #1468c9;
+        }
+
+
+        /* ================= AVAILABLE QUIZZES ================= */
+
+        .quiz-heading {
+            font-size: 27px;
+            margin-bottom: 22px;
+        }
+
+        .quiz-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+
+        /* ================= QUIZ CARD ================= */
+
+        .quiz-card {
+            min-height: 140px;
+            border: 2px solid #e4edf7;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background: white;
+        }
+
+        .subject-icon {
+            min-width: 80px;
+            height: 80px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 38px;
+        }
+
+        .c-icon {
+            background: #1683e8;
+        }
+
+        .math-icon {
+            background: #6f2ee8;
+        }
+
+        .physics-icon {
+            background: #12ae70;
+        }
+
+        .chemistry-icon {
+            background: #f3910b;
+        }
+
+        .english-icon {
+            background: #ee1884;
+        }
+
+
+        /* ================= QUIZ INFORMATION ================= */
+
+        .quiz-info {
+            flex: 1;
+        }
+
+        .quiz-info h3 {
+            font-size: 21px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-details {
+            color: #7890b3;
+            font-size: 17px;
+        }
+
+        .difficulty {
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 70px;
+        }
+
+        .easy {
+            background: #e2f9ee;
+            color: #16a36d;
+        }
+
+        .medium {
+            background: #fff1d6;
+            color: #e98212;
+        }
+
+        .hard {
+            background: #ffe0e7;
+            color: #df4660;
+        }
+
+
+        /* ================= START BUTTON ================= */
+
+        .start-btn {
+            background: #1683e8;
+            color: white;
+            border: none;
+            padding: 17px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .start-btn:hover {
+            background: #096dcc;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 25px;
+            }
+
+            .controls {
+                width: 100%;
+            }
+
+            .search-box,
+            .filter-box {
+                width: 50%;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .difficulty {
+                margin-right: 20px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-card {
+                flex-wrap: wrap;
+            }
+
+            .difficulty {
+                margin-right: 0;
+            }
+
+            .start-btn {
+                width: 100%;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box,
+            .filter-box {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <!-- ================= TOP SECTION ================= -->
+
+    <div class="top-section">
+
+        <div class="title-area">
+
+            <div class="quiz-icon">
+                🎮
+            </div>
+
+            <div>
+                <h1>Quiz</h1>
+                <p>Test your knowledge with fun quizzes!</p>
+            </div>
+
+        </div>
+
+
+        <div class="controls">
+
+            <input 
+                type="text"
+                class="search-box"
+                placeholder="🔍  Search quizzes..."
+            >
+
+            <select class="filter-box">
+                <option>All Subjects</option>
+                <option>C Programming</option>
+                <option>Mathematics</option>
+                <option>Physics</option>
+                <option>Chemistry</option>
+                <option>English</option>
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                <div class="stat-icon purple">▣</div>
+                <span>Total Quizzes</span>
+            </div>
+
+            <div class="stat-number purple-text">12</div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                <div class="stat-icon green">✓</div>
+                <span>Attempted</span>
+            </div>
+
+            <div class="stat-number green-text">5</div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                <div class="stat-icon orange">✓</div>
+                <span>Pending</span>
+            </div>
+
+            <div class="stat-number orange-text">7</div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                <div class="stat-icon blue">◉</div>
+                <span>Average Score</span>
+            </div>
+
+            <div class="stat-number blue-text">78%</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= AVAILABLE QUIZZES ================= -->
+
+    <h2 class="quiz-heading">Available Quizzes</h2>
+
+
+    <div class="quiz-list">
+
+
+        <!-- QUIZ 1 -->
+
+        <div class="quiz-card">
+
+            <div class="subject-icon c-icon">
+                💻
+            </div>
+
+            <div class="quiz-info">
+                <h3>Basic C Programming</h3>
+
+                <div class="quiz-details">
+                    10 Questions &nbsp; • &nbsp; 15 mins
+                </div>
+            </div>
+
+            <span class="difficulty easy">
+                Easy
+            </span>
+
+            <button class="start-btn">
+                Start Quiz →
+            </button>
+
+        </div>
+
+
+        <!-- QUIZ 2 -->
+
+        <div class="quiz-card">
+
+            <div class="subject-icon math-icon">
+                ▣
+            </div>
+
+            <div class="quiz-info">
+                <h3>Algebra Basics</h3>
+
+                <div class="quiz-details">
+                    10 Questions &nbsp; • &nbsp; 20 mins
+                </div>
+            </div>
+
+            <span class="difficulty medium">
+                Medium
+            </span>
+
+            <button class="start-btn">
+                Start Quiz →
+            </button>
+
+        </div>
+
+
+        <!-- QUIZ 3 -->
+
+        <div class="quiz-card">
+
+            <div class="subject-icon physics-icon">
+                ⚛
+            </div>
+
+            <div class="quiz-info">
+                <h3>Physics - Force &amp; Motion</h3>
+
+                <div class="quiz-details">
+                    10 Questions &nbsp; • &nbsp; 15 mins
+                </div>
+            </div>
+
+            <span class="difficulty medium">
+                Medium
+            </span>
+
+            <button class="start-btn">
+                Start Quiz →
+            </button>
+
+        </div>
+
+
+        <!-- QUIZ 4 -->
+
+        <div class="quiz-card">
+
+            <div class="subject-icon chemistry-icon">
+                ⚗
+            </div>
+
+            <div class="quiz-info">
+                <h3>Organic Chemistry</h3>
+
+                <div class="quiz-details">
+                    10 Questions &nbsp; • &nbsp; 15 mins
+                </div>
+            </div>
+
+            <span class="difficulty hard">
+                Hard
+            </span>
+
+            <button class="start-btn">
+                Start Quiz →
+            </button>
+
+        </div>
+
+
+        <!-- QUIZ 5 -->
+
+        <div class="quiz-card">
+
+            <div class="subject-icon english-icon">
+                ▢
+            </div>
+
+            <div class="quiz-info">
+                <h3>English Vocabulary</h3>
+
+                <div class="quiz-details">
+                    10 Questions &nbsp; • &nbsp; 10 mins
+                </div>
+            </div>
+
+            <span class="difficulty easy">
+                Easy
+            </span>
+
+            <button class="start-btn">
+                Start Quiz →
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

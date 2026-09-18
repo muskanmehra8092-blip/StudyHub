@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>To-Do List - StudyHub</title>
+
+    <style>
+
+        /* ================= BASIC RESET ================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #173b78;
+        }
+
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .todo-container {
+            width: 94%;
+            max-width: 1400px;
+            margin: 25px auto;
+            padding: 30px;
+            border: 2px solid #dbe9f7;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(30, 100, 180, 0.08);
+        }
+
+
+        /* ================= TOP HEADER ================= */
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .title-icon {
+            width: 58px;
+            height: 58px;
+            background: #1677e8;
+            color: white;
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .title-section h1 {
+            font-size: 30px;
+            color: #173b78;
+            margin-bottom: 8px;
+        }
+
+        .title-section p {
+            color: #7791b3;
+            font-size: 16px;
+        }
+
+        .add-task-btn {
+            background: #1478e8;
+            color: white;
+            border: none;
+            padding: 17px 30px;
+            border-radius: 10px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1.4fr;
+            gap: 22px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            min-height: 150px;
+            padding: 25px;
+            border: 2px solid #e2edf8;
+            border-radius: 14px;
+            background: #fbfdff;
+        }
+
+        .stat-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+        }
+
+        .total .stat-title {
+            color: #4186d7;
+        }
+
+        .total .stat-icon {
+            background: #e1f0ff;
+        }
+
+        .completed .stat-title {
+            color: #2aae83;
+        }
+
+        .completed .stat-icon {
+            background: #d9f8ed;
+        }
+
+        .pending .stat-title {
+            color: #e99720;
+        }
+
+        .pending .stat-icon {
+            background: #fff0d3;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-left: 42px;
+        }
+
+        .total .stat-number {
+            color: #287bd2;
+        }
+
+        .completed .stat-number {
+            color: #20a778;
+        }
+
+        .pending .stat-number {
+            color: #df8915;
+        }
+
+
+        /* ================= PROGRESS ================= */
+
+        .progress-card {
+            padding: 22px;
+        }
+
+        .progress-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .progress-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #eee3ff;
+            color: #824de0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .percentage {
+            font-size: 32px;
+            margin: 12px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 9px;
+            background: #dceafa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 50%;
+            height: 100%;
+            background: #1984e9;
+            border-radius: 10px;
+        }
+
+
+        /* ================= CONTENT AREA ================= */
+
+        .content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 28px;
+        }
+
+
+        /* ================= TODAY'S TASKS ================= */
+
+        .tasks-section h2 {
+            font-size: 23px;
+            margin-bottom: 18px;
+        }
+
+        .task-box {
+            border: 2px solid #e2edf8;
+            border-radius: 13px;
+            overflow: hidden;
+        }
+
+        .task {
+            min-height: 75px;
+            padding: 15px 20px;
+
+            display: grid;
+            grid-template-columns: 40px 1fr 170px 100px 40px;
+            align-items: center;
+
+            border-bottom: 1px solid #e4edf6;
+        }
+
+        .task:last-child {
+            border-bottom: none;
+        }
+
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #9db7d5;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .checked {
+            background: #147de5;
+            border-color: #147de5;
+        }
+
+        .task-name {
+            font-size: 16px;
+            color: #38557c;
+        }
+
+        .done {
+            text-decoration: line-through;
+            color: #7890ad;
+        }
+
+        .subject {
+            width: fit-content;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .computer {
+            background: #e2f1ff;
+            color: #3782d5;
+        }
+
+        .chemistry {
+            background: #fff0cf;
+            color: #df941f;
+        }
+
+        .physics {
+            background: #dff8ef;
+            color: #36aa82;
+        }
+
+        .mathematics {
+            background: #eee5ff;
+            color: #8657d8;
+        }
+
+        .personal {
+            background: #fff0d9;
+            color: #df941f;
+        }
+
+        .time {
+            font-size: 15px;
+            color: #3974b7;
+            font-weight: bold;
+        }
+
+        .delete {
+            color: #8198b4;
+            font-size: 20px;
+        }
+
+
+        /* ================= RIGHT SIDE ================= */
+
+        .right-side {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+
+        /* ================= QUICK ADD ================= */
+
+        .quick-add {
+            border: 2px solid #e2edf8;
+            border-radius: 13px;
+            padding: 25px;
+        }
+
+        .quick-add h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .input-box {
+            width: 100%;
+            height: 50px;
+            border: 2px solid #e1ebf5;
+            border-radius: 10px;
+            padding: 0 15px;
+            margin-bottom: 12px;
+
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-box::placeholder {
+            color: #94a8c0;
+        }
+
+        .quick-button {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+
+            background: #167ce8;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+        /* ================= QUOTE ================= */
+
+        .quote {
+            min-height: 170px;
+            padding: 25px;
+
+            background: #eaf5ff;
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            line-height: 1.5;
+            color: #36659d;
+            font-weight: bold;
+        }
+
+        .plant {
+            font-size: 60px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .todo-container {
+                padding: 18px;
+            }
+
+            .top-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .task {
+                grid-template-columns: 35px 1fr;
+                gap: 10px;
+            }
+
+            .subject,
+            .time,
+            .delete {
+                margin-left: 45px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="todo-container">
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="top-header">
+
+            <div class="title-section">
+
+                <div class="title-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <h1>To-Do List</h1>
+                    <p>Manage your daily tasks and achieve your goals!</p>
+                </div>
+
+            </div>
+
+            <button class="add-task-btn">
+                + &nbsp; Add Task
+            </button>
+
+        </div>
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <div class="stats">
+
+            <div class="stat-card total">
+
+                <div class="stat-title">
+                    <span class="stat-icon">✓</span>
+                    Total Tasks
+                </div>
+
+                <div class="stat-number">6</div>
+
+            </div>
+
+
+            <div class="stat-card completed">
+
+                <div class="stat-title">
+                    <span class="stat-icon">✓</span>
+                    Completed
+                </div>
+
+                <div class="stat-number">3</div>
+
+            </div>
+
+
+            <div class="stat-card pending">
+
+                <div class="stat-title">
+                    <span class="stat-icon">✓</span>
+                    Pending
+                </div>
+
+                <div class="stat-number">3</div>
+
+            </div>
+
+
+            <div class="stat-card progress-card">
+
+                <div class="progress-title">
+                    <span class="progress-icon">★</span>
+                    Progress
+                </div>
+
+                <div class="percentage">
+                    50%
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <div class="content">
+
+
+            <!-- ================= TASKS ================= -->
+
+            <div class="tasks-section">
+
+                <h2>☑ &nbsp; Today's Tasks</h2>
+
+                <div class="task-box">
+
+
+                    <!-- TASK 1 -->
+
+                    <div class="task">
+
+                        <div class="checkbox checked">✓</div>
+
+                        <div class="task-name done">
+                            Complete DSA assignment
+                        </div>
+
+                        <div class="subject computer">
+                            Computer Science
+                        </div>
+
+                        <div class="time">
+                            10:00 AM
+                        </div>
+
+                        <div class="delete">
+                            ♧
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 2 -->
+
+                    <div class="task">
+
+                        <div class="checkbox checked">✓</div>
+
+                        <div class="task-name done">
+                            Read Organic Chemistry chapter 3
+                        </div>
+
+                        <div class="subject chemistry">
+                            Chemistry
+                        </div>
+
+                        <div class="time">
+                            12:00 PM
+                        </div>
+
+                        <div class="delete">
+                            ♧
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 3 -->
+
+                    <div class="task">
+
+                        <div class="checkbox"></div>
+
+                        <div class="task-name">
+                            Attend Physics online class
+                        </div>
+
+                        <div class="subject physics">
+                            Physics
+                        </div>
+
+                        <div class="time">
+                            3:00 PM
+                        </div>
+
+                        <div class="delete">
+                            ♧
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 4 -->
+
+                    <div class="task">
+
+                        <div class="checkbox"></div>
+
+                        <div class="task-name">
+                            Make notes for Web Development
+                        </div>
+
+                        <div class="subject computer">
+                            Computer Science
+                        </div>
+
+                        <div class="time">
+                            5:00 PM
+                        </div>
+
+                        <div class="delete">
+                            ♧
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 5 -->
+
+                    <div class="task">
+
+                        <div class="checkbox"></div>
+
+                        <div class="task-name">
+                            Revise Mathematics formulas
+                        </div>
+
+                        <div class="subject mathematics">
+                            Mathematics
+                        </div>
+
+                        <div class="time">
+                            8:00 PM
+                        </div>
+
+                        <div class="delete">
+                            ♧
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 6 -->
+
+                    <div class="task">
+
+                        <div class="checkbox"></div>
+
+                        <div class="task-name">
+                            Go for a walk / rest
+                        </div>
+
+                        <div class="subject personal">
+                            Personal
+                        </div>
+
+                        <div class="time">
+                            9:00 PM
+                        </div>
+
+                        <div class="delete">
+                            ♧
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RIGHT SIDE ================= -->
+
+            <div class="right-side">
+
+
+                <!-- QUICK ADD -->
+
+                <div class="quick-add">
+
+                    <h2>Quick Add</h2>
+
+                    <input
+                        type="text"
+                        class="input-box"
+                        placeholder="Task title..."
+                    >
+
+                    <select class="input-box">
+
+                        <option>Select Subject</option>
+                        <option>Computer Science</option>
+                        <option>Chemistry</option>
+                        <option>Physics</option>
+                        <option>Mathematics</option>
+                        <option>Personal</option>
+
+                    </select>
+
+                    <input
+                        type="date"
+                        class="input-box"
+                    >
+
+                    <input
+                        type="time"
+                        class="input-box"
+                    >
+
+                    <button class="quick-button">
+                        Add Task
+                    </button>
+
+                </div>
+
+
+                <!-- QUOTE -->
+
+                <div class="quote">
+
+                    <div class="quote-text">
+                        “Small steps<br>
+                        every day lead to<br>
+                        big results.”
+                    </div>
+
+                    <div class="plant">
+                        🌱
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

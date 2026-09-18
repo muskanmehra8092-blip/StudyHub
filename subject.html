@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyHub - All Subjects</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* ================= BASIC RESET ================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #172554;
+            padding: 20px 4%;
+        }
+
+
+        /* ================= TOP SECTION ================= */
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 38px;
+            color: #0b2b68;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            font-size: 20px;
+            color: #60759b;
+        }
+
+
+        /* ================= SEARCH BOX ================= */
+
+        .search-box {
+            width: 370px;
+            height: 55px;
+            border: 1px solid #d9deeb;
+            border-radius: 15px;
+            background-color: #f8f9fc;
+
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+
+            box-shadow: 0 2px 7px rgba(0,0,0,0.04);
+        }
+
+        .search-box i {
+            font-size: 20px;
+            color: #65748e;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            font-size: 16px;
+            color: #172554;
+        }
+
+        .search-box input::placeholder {
+            color: #7b879e;
+        }
+
+
+        /* ================= SUBJECT GRID ================= */
+
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+        }
+
+
+        /* ================= SUBJECT CARD ================= */
+
+        .subject-card {
+            min-height: 280px;
+            padding: 24px 28px;
+
+            border-radius: 15px;
+            border: 1px solid rgba(100, 130, 180, 0.15);
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+
+        /* Different card backgrounds */
+
+        .blue {
+            background-color: #edf7ff;
+        }
+
+        .purple {
+            background-color: #f5f0ff;
+        }
+
+        .green {
+            background-color: #effdf7;
+        }
+
+        .orange {
+            background-color: #fff9ed;
+        }
+
+        .pink {
+            background-color: #fff1f8;
+        }
+
+
+        /* ================= SUBJECT ICON ================= */
+
+        .subject-icon {
+            width: 70px;
+            height: 70px;
+
+            border-radius: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .subject-icon i {
+            font-size: 38px;
+        }
+
+        .blue .subject-icon {
+            background-color: #d8edff;
+            color: #1479e8;
+        }
+
+        .purple .subject-icon {
+            background-color: #e5d8ff;
+            color: #6130db;
+        }
+
+        .green .subject-icon {
+            background-color: #d5f7ea;
+            color: #0da77a;
+        }
+
+        .orange .subject-icon {
+            background-color: #fff0ce;
+            color: #ed8a16;
+        }
+
+        .pink .subject-icon {
+            background-color: #ffd9ee;
+            color: #db2c91;
+        }
+
+
+        /* ================= SUBJECT TEXT ================= */
+
+        .subject-card h2 {
+            font-size: 23px;
+            margin-bottom: 12px;
+            color: #12326d;
+        }
+
+        .subject-card p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #637493;
+            min-height: 55px;
+        }
+
+
+        /* ================= VIEW NOTES BUTTON ================= */
+
+        .notes-btn {
+            margin-top: auto;
+
+            border: none;
+            border-radius: 22px;
+
+            padding: 11px 25px;
+
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .blue .notes-btn {
+            background-color: #1479ed;
+        }
+
+        .purple .notes-btn {
+            background-color: #7040df;
+        }
+
+        .green .notes-btn {
+            background-color: #16ad7e;
+        }
+
+        .orange .notes-btn {
+            background-color: #f49a31;
+        }
+
+        .pink .notes-btn {
+            background-color: #e83c98;
+        }
+
+
+        /* ================= BOTTOM FEATURES ================= */
+
+        .features {
+            margin-top: 24px;
+
+            background-color: #f2f5ff;
+
+            border: 1px solid #dfe5f5;
+            border-radius: 15px;
+
+            min-height: 110px;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            align-items: center;
+        }
+
+        .feature {
+            min-height: 70px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 35px;
+
+            border-right: 2px solid #d8deed;
+        }
+
+        .feature:last-child {
+            border-right: none;
+        }
+
+        .feature-icon {
+            font-size: 42px;
+            color: #123c88;
+            margin-right: 25px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #12326d;
+        }
+
+        .feature p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #657493;
+        }
+
+        .heart {
+            color: #e83c98;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .subjects {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature:nth-child(2) {
+                border-right: none;
+            }
+        }
+
+
+        @media (max-width: 750px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .top-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .subjects {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .feature {
+                border-right: none;
+                border-bottom: 1px solid #d8deed;
+                padding: 20px;
+            }
+
+            .feature:last-child {
+                border-bottom: none;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .subjects {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+            .heading p {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ================= HEADING + SEARCH ================= -->
+
+    <section class="top-section">
+
+        <div class="heading">
+            <h1>All Subjects</h1>
+            <p>Select a subject to get started</p>
+        </div>
+
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search subject...">
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= SUBJECT CARDS ================= -->
+
+    <section class="subjects">
+
+
+        <!-- Computer Science -->
+
+        <div class="subject-card blue">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-laptop"></i>
+            </div>
+
+            <h2>Computer Science</h2>
+
+            <p>
+                Programming, Web Dev,<br>
+                DSA, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- Mathematics -->
+
+        <div class="subject-card purple">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-calculator"></i>
+            </div>
+
+            <h2>Mathematics</h2>
+
+            <p>
+                Algebra, Calculus,<br>
+                Discrete Math, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- Physics -->
+
+        <div class="subject-card green">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-atom"></i>
+            </div>
+
+            <h2>Physics</h2>
+
+            <p>
+                Mechanics, Electricity,<br>
+                Modern Physics, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- Chemistry -->
+
+        <div class="subject-card orange">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-flask"></i>
+            </div>
+
+            <h2>Chemistry</h2>
+
+            <p>
+                Organic, Inorganic,<br>
+                Physical, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- English -->
+
+        <div class="subject-card pink">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+
+            <h2>English</h2>
+
+            <p>
+                Grammar, Vocabulary,<br>
+                Literature, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- Biology -->
+
+        <div class="subject-card green">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+
+            <h2>Biology</h2>
+
+            <p>
+                Cell, Genetics, Ecology,<br>
+                Human Body, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- History -->
+
+        <div class="subject-card purple">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+
+            <h2>History</h2>
+
+            <p>
+                Ancient, Medieval,<br>
+                Modern, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- Geography -->
+
+        <div class="subject-card blue">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-globe"></i>
+            </div>
+
+            <h2>Geography</h2>
+
+            <p>
+                Physical, Human,<br>
+                Environment, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- Hindi -->
+
+        <div class="subject-card pink">
+
+            <div class="subject-icon">
+                <span style="font-size: 38px; font-weight: bold;">अ</span>
+            </div>
+
+            <h2>Hindi</h2>
+
+            <p>
+                Grammar, Literature,<br>
+                Writing, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+
+        <!-- Social Science -->
+
+        <div class="subject-card purple">
+
+            <div class="subject-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <h2>Social Science</h2>
+
+            <p>
+                Civics, Economics,<br>
+                History, Geography, etc.
+            </p>
+
+            <button class="notes-btn">
+                View Notes &nbsp; →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= BOTTOM FEATURES ================= -->
+
+    <section class="features">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <div>
+                <h3>Learn Anytime</h3>
+                <p>
+                    Access your study material<br>
+                    24/7
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+
+            <div>
+                <h3>Be More Productive</h3>
+                <p>
+                    Organize your tasks<br>
+                    and time
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-bullseye"></i>
+            </div>
+
+            <div>
+                <h3>Track Your Progress</h3>
+                <p>
+                    Take quizzes and<br>
+                    improve your scores
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                <i class="fa-regular fa-heart"></i>
+            </div>
+
+            <div>
+                <h3>Your Success</h3>
+                <p>
+                    is Our Goal <span class="heart">♥</span>
+                </p>
+            </div>
+
+        </div>
+
+
+    </section>
+
+</body>
+</html>
